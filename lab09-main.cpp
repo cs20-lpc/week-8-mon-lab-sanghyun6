@@ -4,67 +4,66 @@ using namespace std;
 
 int main()
 {
+    ArrayStack<int> stackA(10);
+    for (int i = 0; i < 10; i++)
+    {
+        stackA.push(i);
+        cout << i;
+        if (i < 9)
+            cout << " ";
+    }
+    cout << endl;
 
-    ArrayStack<int> s1(5);
-    cout << s1;
+    if (stackA.isFull())
+    {
+        cout << "Stack A is full!" << endl;
+    }
+    cout << "Stack A length: " << stackA.getLength() << endl;
 
-    s1.push(10);
-    s1.push(20);
-    s1.push(30);
-    cout << s1;
+    ArrayStack<int> stackB(stackA);
+    cout << "Stack B length: " << stackB.getLength() << endl;
 
-    s1.rotate(Stack<int>::RIGHT);
-
-    cout << "peek: " << s1.peek() << endl;
-    s1.pop();
-    cout << "After pop:\n"
-         << s1;
-
-    s1.rotate(Stack<int>::RIGHT);
-    s1.rotate(Stack<int>::LEFT);
-
-    ArrayStack<int> s2(3);
-    s2.push(1);
-    s2.push(2);
-    s2.push(3);
     try
     {
-        s2.push(4);
+        stackB.push(99);
     }
     catch (string e)
     {
-        cout << "Exception: " << e << endl;
+        cout << "push: error, stack is full, avoiding overflow" << endl;
     }
 
-    ArrayStack<int> s3(3);
+    for (int i = 0; i < 5; i++)
+    {
+        cout << "Popping " << stackB.peek() << " from stack B" << endl;
+        stackB.pop();
+    }
+    cout << "Stack B length: " << stackB.getLength() << endl;
+
+    stackB.clear();
+    cout << "Stack B is now empty after being cleared" << endl;
+
     try
     {
-        s3.pop();
+        stackB.pop();
     }
     catch (string e)
     {
-        cout << "Exception: " << e << endl;
+        cout << "pop: error, stack is empty, avoiding underflow" << endl;
     }
+
     try
     {
-        s3.peek();
+        stackB.peek();
     }
     catch (string e)
     {
-        cout << "Exception: " << e << endl;
+        cout << "peek: error, stack is empty, cannot access the top" << endl;
     }
 
-    ArrayStack<int> s5(s2);
-    cout << "s2:\n"
-         << s2;
-    cout << "s5 (copy of s2):\n"
-         << s5;
-    s5.pop();
-    cout << "After pop on s5:\n";
-    cout << "s2:\n"
-         << s2;
-    cout << "s5:\n"
-         << s5;
+    ArrayStack<int> stackC(10);
+    stackC = stackA;
+    cout << "Stack A length: " << stackA.getLength() << endl;
+    cout << "Stack C length: " << stackC.getLength() << endl;
 
     return 0;
 }
